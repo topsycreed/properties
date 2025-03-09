@@ -37,3 +37,12 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+### Properties ###
+# Игнорируем все .properties файлы в ресурсах
+src/test/resources/*.properties
+src/main/resources/*.properties
+
+# Исключение: разрешаем загружать шаблон (если нужно)
+!src/test/resources/template.properties
+!src/main/resources/template.properties

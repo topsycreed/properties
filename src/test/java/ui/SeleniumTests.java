@@ -44,4 +44,17 @@ class SeleniumTests {
         assertEquals(config.getBaseUrl() + "login-form.html", driver.getCurrentUrl());
         assertEquals("Login form", title.getText());
     }
+
+    @Test
+    void signInTest() {
+        driver.get(config.getBaseUrl());
+        driver.findElement(By.xpath("//a[@href = 'login-form.html']")).click();
+
+        driver.findElement(By.id("username")).sendKeys(config.getUsername());
+        driver.findElement(By.id("password")).sendKeys(config.getPassword());
+        driver.findElement(By.xpath("//button[@type = 'submit']")).click();
+        WebElement message = driver.findElement(By.className("alert"));
+
+        assertEquals("Login successful", message.getText());
+    }
 }

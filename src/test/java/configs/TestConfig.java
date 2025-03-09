@@ -15,10 +15,22 @@ public class TestConfig {
     }
 
     public String getBaseUrl() {
-        String baseUrl = properties.getProperty("baseUrl");
-        assertNotNull(baseUrl, String.format("BaseUrl is not found in %s.properties", env));
-        System.out.println("Base URL: " + baseUrl);
-        return baseUrl;
+        return getFieldByName("baseUrl");
+    }
+
+    public String getUsername() {
+        return getFieldByName("username");
+    }
+
+    public String getPassword() {
+        return getFieldByName("password");
+    }
+
+    private String getFieldByName(String fieldName) {
+        String field = properties.getProperty(fieldName);
+        assertNotNull(field, String.format("%s is not found in %s.properties", fieldName, env));
+        System.out.printf("%s: %s%n", fieldName, field);
+        return field;
     }
 
     private Properties getPropertiesByEnv(String env) {
