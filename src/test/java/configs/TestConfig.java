@@ -28,7 +28,10 @@ public class TestConfig {
 
     private String getFieldByName(String fieldName) {
         String field = properties.getProperty(fieldName);
-        assertNotNull(field, String.format("%s is not found in %s.properties", fieldName, env));
+        if (field == null || field.isEmpty()) {
+            field = System.getProperty(fieldName, field);
+        }
+        assertNotNull(field, String.format("%s is not found in %s.properties and not set by system properties", fieldName, env));
         System.out.printf("%s: %s%n", fieldName, field);
         return field;
     }
