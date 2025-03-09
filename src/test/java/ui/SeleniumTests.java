@@ -1,3 +1,6 @@
+package ui;
+
+import configs.TestConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SeleniumTests {
     WebDriver driver;
-    private static final String BASE_URL = "https://bonigarcia.dev/selenium-webdriver-java/";
+    TestConfig config = new TestConfig();
 
     @BeforeEach
     void setup() {
@@ -25,20 +28,20 @@ class SeleniumTests {
 
     @Test
     void openHomePageTest() {
-        driver.get(BASE_URL);
+        driver.get(config.getBaseUrl());
 
-        assertEquals(BASE_URL, driver.getCurrentUrl());
+        assertEquals(config.getBaseUrl(), driver.getCurrentUrl());
         assertEquals("Hands-On Selenium WebDriver with Java", driver.getTitle());
     }
 
     @Test
     void openLoginPageTest() {
-        driver.get(BASE_URL);
+        driver.get(config.getBaseUrl());
 
         driver.findElement(By.xpath("//a[@href = 'login-form.html']")).click();
         WebElement title = driver.findElement(By.className("display-6"));
 
-        assertEquals(BASE_URL + "login-form.html", driver.getCurrentUrl());
+        assertEquals(config.getBaseUrl() + "login-form.html", driver.getCurrentUrl());
         assertEquals("Login form", title.getText());
     }
 }
