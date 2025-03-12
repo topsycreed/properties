@@ -31,6 +31,20 @@ public class TestConfig {
 которое будет использоваться на случай отсутствия системной переменной. В нашем случае удобно взять такое значение из класса констант.
 
 В самих тестах нужно инициализировать экземпляр класса TestConfig и использовать методы getBaseUrl() для получения значений.
+```java
+class SeleniumTests {
+    WebDriver driver;
+    TestConfig config = new TestConfig();
+
+    @Test
+    void openHomePageTest() {
+        driver.get(config.getBaseUrl());
+
+        assertEquals(config.getBaseUrl(), driver.getCurrentUrl());
+        assertEquals("Hands-On Selenium WebDriver with Java", driver.getTitle());
+    }
+}
+```
 
 Альтернативный способ задания системных properties внутри build.gradle:
 ```groovy
@@ -39,6 +53,31 @@ test {
     systemProperties(System.getProperties())
     systemProperty "baseUrl", System.getProperty("baseUrl", "https://bonigarcia.dev/selenium-webdriver-java/")
 }
+```
+
+Альтернативный способ задания системных properties внутри Maven Surefire плагина:
+```xml
+<properties>
+    <baseUrl>https://bonigarcia.dev/selenium-webdriver-java/</baseUrl>
+</properties>
+
+<build>
+<plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+        <configuration>
+            <systemProperties>
+                <property>
+                    <name>baseUrl</name>
+                    <value>${baseUrl}</value>
+                </property>
+            </systemProperties>
+        </configuration>
+    </plugin>
+</plugins>
+</build>
 ```
 
 ## Properties файлы
